@@ -4,6 +4,9 @@ import com.uep.wap.model.AssetStatus;
 import com.uep.wap.model.AssetType;
 import com.uep.wap.model.LicenceType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CreateAssetDTO {
     private String title;
     private String description;
@@ -17,6 +20,8 @@ public class CreateAssetDTO {
     private AssetType type = AssetType.OTHER;
     private AssetStatus status = AssetStatus.DRAFT;
     private LicenceType licenceType = LicenceType.INTERNAL;
+    private Boolean publicDownload = Boolean.FALSE;
+    private List<Long> tagIds = new ArrayList<>();
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
@@ -42,4 +47,8 @@ public class CreateAssetDTO {
     public void setStatus(AssetStatus status) { this.status = status; }
     public LicenceType getLicenceType() { return licenceType; }
     public void setLicenceType(LicenceType licenceType) { this.licenceType = licenceType; }
+    public Boolean getPublicDownload() { return publicDownload; }
+    public void setPublicDownload(Boolean publicDownload) { this.publicDownload = publicDownload; }
+    public List<Long> getTagIds() { return tagIds; }
+    public void setTagIds(List<Long> tagIds) { this.tagIds = tagIds; }
 }

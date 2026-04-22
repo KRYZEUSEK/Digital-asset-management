@@ -18,4 +18,12 @@ public class GlobalExceptionHandler {
         body.put("message", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<Map<String, Object>> handleIllegalState(IllegalStateException exception) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("error", "CONFLICT");
+        body.put("message", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
 }

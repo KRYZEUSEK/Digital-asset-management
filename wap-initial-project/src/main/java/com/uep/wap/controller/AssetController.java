@@ -5,6 +5,7 @@ import com.uep.wap.dto.CreateAssetDTO;
 import com.uep.wap.dto.UpdateAssetDTO;
 import com.uep.wap.service.AssetService;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,11 @@ public class AssetController {
         return assetService.getAllAssets();
     }
 
+    @GetMapping("/{id}")
+    public AssetDTO getAsset(@PathVariable Long id) {
+        return assetService.getAsset(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AssetDTO createAsset(@RequestBody CreateAssetDTO dto) {
@@ -40,5 +46,11 @@ public class AssetController {
     @PutMapping("/{id}")
     public AssetDTO updateAsset(@PathVariable Long id, @RequestBody UpdateAssetDTO dto) {
         return assetService.updateAsset(id, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAsset(@PathVariable Long id) {
+        assetService.deleteAsset(id);
     }
 }

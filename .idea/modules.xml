@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/wap-initial-project.iml" filepath="$PROJECT_DIR$/.idea/wap-initial-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wap-initial-project/wap-initial-project.iml" filepath="$PROJECT_DIR$/wap-initial-project/wap-initial-project.iml" />
     </modules>
   </component>
 </project>

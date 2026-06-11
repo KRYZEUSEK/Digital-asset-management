@@ -15,7 +15,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+                .authorizeHttpRequests(auth -> auth
+                        .antMatchers("/api/users", "/api/assets/upload").authenticated() // Zabezpieczamy np. wgrywanie plików
+                        .anyRequest().permitAll() // Reszta m.in HTML, CSS publiczne
+                )
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }

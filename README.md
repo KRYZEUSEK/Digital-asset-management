@@ -41,18 +41,18 @@ Key capabilities:
 
 ## Technology Stack
 
-| Layer | Technology |
-|---|---|
-| Language | Java 21 |
-| Framework | Spring Boot 3.2 (MVC, Security, Data JPA, Cache) |
-| ORM | Hibernate 6 |
-| Database | MySQL 8 |
-| Templates | Thymeleaf 3 |
-| Frontend | HTML5, CSS3, Bootstrap 5, vanilla JavaScript |
-| Charts | Chart.js 4 |
+| Layer | Technology                                         |
+|---|----------------------------------------------------|
+| Language | Java 17                                            |
+| Framework | Spring Boot 2.7.4 (MVC, Security, Data JPA, Cache) |
+| ORM | Hibernate 6                                        |
+| Database | MySQL 8                                            |
+| Templates | Thymeleaf 3                                        |
+| Frontend | HTML5, CSS3, Bootstrap 5, vanilla JavaScript       |
+| Charts | Chart.js 4                                         |
 | Security | Spring Security (BCrypt, session-based auth, RBAC) |
-| API Docs | SpringDoc OpenAPI 3 (Swagger UI) |
-| Build | Maven 3 |
+| API Docs | SpringDoc OpenAPI 3 (Swagger UI)                   |
+| Build | Maven 3                                            |
 
 ---
 

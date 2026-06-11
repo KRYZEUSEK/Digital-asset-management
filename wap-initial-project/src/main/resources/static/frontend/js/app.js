@@ -83,7 +83,13 @@
       const viewBtn = node.querySelector('.viewBtn');
       const dlBtn = node.querySelector('.downloadBtn');
 
-      img.src = a.thumbnailPath || a.storagePath || `https://picsum.photos/320/200?random=${a.id}`;
+      if (a.mimeType && a.mimeType.startsWith('image/')) {
+        // Jeśli plik to obraz, pobierz go bezpiecznie z endpointu
+        img.src = `/api/assets/${a.id}/download`;
+      } else {
+        // Generowanie losowej grafiki zastępczej z ID dla innych plików np. PDF, Wideo
+        img.src = `https://picsum.photos/320/200?random=${a.id}`;
+      }
       title.textContent = a.title;
       meta.textContent = `${a.mimeType || ''} • ${a.fileSizeBytes || ''}`;
 

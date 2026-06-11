@@ -10,4 +10,6 @@ public interface AssetRepository extends JpaRepository<Asset, Long> {
     List<Asset> findByStatus(AssetStatus status);
 
     List<Asset> findByOwnerId(Long ownerId);
+
+    List<Asset> findByTitleContainingIgnoreCase(String title);
 }

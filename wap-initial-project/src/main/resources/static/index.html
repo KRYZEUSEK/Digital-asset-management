@@ -34,6 +34,14 @@
           </select>
           <label for="ownerInput">Właściciel (userId)</label>
           <input id="ownerInput" name="ownerId" type="number" placeholder="1" />
+          <label for="categorySelect">Kategoria</label>
+          <select id="categorySelect" name="categoryId">
+            <option value="">Bez kategorii</option>
+          </select>
+          <fieldset class="tag-picker">
+            <legend>Tagi</legend>
+            <div id="uploadTagsList" class="checkbox-list"></div>
+          </fieldset>
           <button type="submit">Prześlij</button>
         </form>
       </section>
@@ -44,8 +52,16 @@
           <input type="checkbox" id="filterPublished" /> Tylko opublikowane
         </label>
         <h3>Kategorie</h3>
+        <form id="categoryForm" class="inline-form">
+          <input id="newCategoryName" type="text" placeholder="Nowa kategoria" />
+          <button type="submit">Dodaj</button>
+        </form>
         <ul id="categoriesList" class="list-reset"></ul>
         <h3>Tagi</h3>
+        <form id="tagForm" class="inline-form">
+          <input id="newTagName" type="text" placeholder="Nowy tag" />
+          <button type="submit">Dodaj</button>
+        </form>
         <ul id="tagsList" class="list-reset"></ul>
       </section>
     </aside>

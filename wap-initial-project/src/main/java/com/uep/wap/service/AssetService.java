@@ -20,12 +20,18 @@ import com.uep.wap.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -206,7 +212,7 @@ public class AssetService {
         dto.setTitle(asset.getTitle());
         dto.setDescription(asset.getDescription());
         dto.setOriginalFilename(asset.getOriginalFilename());
-        dto.setStoragePath(asset.getStoragePath());
+        dto.setStoragePath(resolveLocalStoragePath(asset.getStoragePath(), asset.getOriginalFilename()));
         dto.setThumbnailPath(asset.getThumbnailPath());
         dto.setMimeType(asset.getMimeType());
         dto.setType(asset.getType());
@@ -267,6 +273,30 @@ public class AssetService {
             throw new IllegalArgumentException("One or more tags were not found");
         }
         return new LinkedHashSet<>(tags);
+    }
+
+    private String resolveLocalStoragePath(String storagePath, String originalFilename) {
+        if (storagePath != null && !storagePath.isBlank() && Files.exists(Paths.get(storagePath))) {
+            return storagePath;
+        }
+        if (originalFilename == null || originalFilename.isBlank()) {
+            return storagePath;
+        }
+
+        Path storageDir = Paths.get("uploads");
+        if (!Files.isDirectory(storageDir)) {
+            return storagePath;
+        }
+
+        try (Stream<Path> files = Files.list(storageDir)) {
+            Optional<Path> localPath = files
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().endsWith("_" + originalFilename))
+                    .max(Comparator.comparingLong(path -> path.toFile().lastModified()));
+            return localPath.map(path -> path.toAbsolutePath().toString()).orElse(storagePath);
+        } catch (IOException ex) {
+            return storagePath;
+        }
     }
 
     private void validateAssetPayload(String title, String originalFilename, String storagePath,

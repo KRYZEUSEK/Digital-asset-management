@@ -20,6 +20,16 @@ body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);margin:0;c
 .upload input[type=file]{width:100%}
 .upload form{display:flex;flex-direction:column;gap:.5rem}
 .upload button{background:var(--accent);color:#fff;border:0;padding:.5rem;border-radius:6px;cursor:pointer}
+.upload select,.upload input[type=text],.upload input[type=number],.inline-form input{padding:.45rem .55rem;border:1px solid #d1d5db;border-radius:6px;background:#fff}
+.tag-picker{border:1px solid #e5e7eb;border-radius:6px;padding:.5rem;margin:0}
+.tag-picker legend{padding:0 .25rem;color:var(--muted);font-size:.86rem}
+.checkbox-list{display:flex;flex-wrap:wrap;gap:.35rem}
+.checkbox-item{display:flex;align-items:center;gap:.25rem;background:#f3f4f6;border-radius:6px;padding:.25rem .4rem;font-size:.85rem}
+.inline-form{display:flex;gap:.4rem;margin-bottom:.5rem}
+.inline-form input{min-width:0;flex:1}
+.inline-form button,.list-reset button{border:0;border-radius:6px;padding:.35rem .5rem;background:#e5e7eb;cursor:pointer}
+.list-reset li{margin-bottom:.35rem}
+.list-reset button.active-filter{background:var(--accent);color:#fff}
 
 .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
 .view-toggle button{padding:.4rem .6rem;border-radius:6px;border:1px solid #ddd;background:#fff;cursor:pointer}
@@ -39,6 +49,12 @@ body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);margin:0;c
 .modal.hidden{display:none}
 .modal-content{background:#fff;border-radius:8px;padding:1rem;max-width:900px;width:95%;max-height:90%;overflow:auto;position:relative}
 .close{position:absolute;right:8px;top:8px;border:0;background:transparent;font-size:1.5rem;cursor:pointer}
+.asset-preview{display:block;max-width:100%;max-height:65vh;margin:.75rem auto;border-radius:6px;background:#f3f4f6}
+.asset-preview-frame{width:100%;height:65vh;border:1px solid #e5e7eb;border-radius:6px;background:#fff}
+.preview-link{display:inline-block;margin:.75rem 0;color:var(--accent)}
+.asset-details{display:grid;grid-template-columns:max-content 1fr;gap:.35rem .75rem;margin:1rem 0 0}
+.asset-details dt{font-weight:600;color:#374151}
+.asset-details dd{margin:0;color:var(--muted);word-break:break-word}
 
 .list-reset{list-style:none;padding:0;margin:0}
 

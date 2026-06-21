@@ -27,11 +27,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Comparator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/assets")
@@ -125,15 +128,32 @@ public class AssetController {
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> downloadAsset(@PathVariable Long id) throws IOException {
         AssetDTO dto = assetService.getAsset(id);
-        Path path = Paths.get(dto.getStoragePath());
-        if (!Files.exists(path)) {
+        Optional<Path> resolvedPath = resolveAssetPath(dto);
+        if (resolvedPath.isEmpty()) {
             throw new IllegalArgumentException("File not found");
         }
+        Path path = resolvedPath.get();
         Resource resource = new UrlResource(path.toUri());
         String contentType = dto.getMimeType() != null ? dto.getMimeType() : MediaType.APPLICATION_OCTET_STREAM_VALUE;
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dto.getOriginalFilename() + "\"")
+                .body(resource);
+    }
+
+    @GetMapping("/{id}/preview")
+    public ResponseEntity<Resource> previewAsset(@PathVariable Long id) throws IOException {
+        AssetDTO dto = assetService.getAsset(id);
+        Optional<Path> resolvedPath = resolveAssetPath(dto);
+        if (resolvedPath.isEmpty()) {
+            throw new IllegalArgumentException("File not found");
+        }
+        Path path = resolvedPath.get();
+        Resource resource = new UrlResource(path.toUri());
+        String contentType = dto.getMimeType() != null ? dto.getMimeType() : MediaType.APPLICATION_OCTET_STREAM_VALUE;
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + dto.getOriginalFilename() + "\"")
                 .body(resource);
     }
 
@@ -146,5 +166,30 @@ public class AssetController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAsset(@PathVariable Long id) {
         assetService.deleteAsset(id);
+    }
+
+    private Optional<Path> resolveAssetPath(AssetDTO dto) throws IOException {
+        if (dto.getStoragePath() != null && !dto.getStoragePath().isBlank()) {
+            Path storedPath = Paths.get(dto.getStoragePath());
+            if (Files.exists(storedPath)) {
+                return Optional.of(storedPath);
+            }
+        }
+
+        if (dto.getOriginalFilename() == null || dto.getOriginalFilename().isBlank()) {
+            return Optional.empty();
+        }
+
+        Path storageDir = Paths.get("uploads");
+        if (!Files.isDirectory(storageDir)) {
+            return Optional.empty();
+        }
+
+        try (Stream<Path> files = Files.list(storageDir)) {
+            return files
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.getFileName().toString().endsWith("_" + dto.getOriginalFilename()))
+                    .max(Comparator.comparingLong(path -> path.toFile().lastModified()));
+        }
     }
 }

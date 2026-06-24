@@ -27,7 +27,7 @@ spring.datasource.password=<DB_PASSWORD>
 server.port=8765
 ```
 
-Replace `<DB_HOST>`, `<DB_NAME>`, `<DB_USER>`, `<DB_PASSWORD>` with the values: jdbc:mysql://150.254.36.243:3306/ait91868, ait91868, ait91868, KN91868
+Replace `<DB_HOST>`, `<DB_NAME>`, `<DB_USER>`, `<DB_PASSWORD>` with the values: 150.254.36.243, ait91868, ait91868, KN91868
 
 Build and start backend (exact commands)
 1. From project root `wap-initial-project` use the Maven wrapper (Windows PowerShell):
